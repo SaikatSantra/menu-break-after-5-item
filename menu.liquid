@@ -1,0 +1,28 @@
+ {%- case block.type -%}
+{%- when 'link_list' -%}
+             
+                {%- assign footer_linklist = block.settings.menu -%}
+            <div class="custom-link-list">
+                  <ul class="site-footer__linklist {% if inline_list %}list--inline{% endif %}">
+                    {% assign count = 0 %}
+                    
+                    {%- for link in linklists[footer_linklist].links -%}
+                    {% assign count = count | plus: 1%}
+                    {% assign rem = count | modulo: 6 %}
+                      <li class="site-footer__linklist-item">
+                        <a href="{{ link.url }}"
+                          {% if link.current %} aria-current="page"{% endif %}
+                        >
+                          {{ link.title | escape }}
+                        </a>
+                       </li>
+                    {% if rem == 0 %}
+                    {% unless forloop.last %}
+                     </ul> 
+                   <ul class="site-footer__linklist {% if inline_list %}list--inline{% endif %}">
+                    {% endunless %}
+                    {% endif %}
+                    {%- endfor -%}
+                  </ul>
+            </div>
+            {% endcase %}
